@@ -23,6 +23,12 @@ export const createRole = (req: Request,res: Response)=>{
 }
 
 export const updateRole = (req: Request,res: Response)=>{
+
+//recuperar parametros de la ruta
+req.params.id;
+console.log(req.params.id);
+
+
     res.status(200).json(
         {
            success:true,
@@ -31,11 +37,3 @@ export const updateRole = (req: Request,res: Response)=>{
     )
 }
 
-export const deleteRole = (req: Request,res: Response)=>{
-    res.status(200).json(
-        {
-           success:true,
-           message: "Role delete" 
-        }
-    )
-}
