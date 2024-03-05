@@ -1,6 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
-import { getRoles } from "./controllers/roleController";
+import { createRole, getRoles, updateRole } from "./controllers/roleController";
 
 
 dotenv.config(); 
@@ -14,6 +14,8 @@ app.get('/healthy',)
 
 //roles routes endpoint
 app.get('/roles', getRoles);
+app.post('/role',createRole);
+app.put ('/role', updateRole);
 
 
 app.listen(PORT,()=>{
