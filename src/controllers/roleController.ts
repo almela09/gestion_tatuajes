@@ -4,7 +4,7 @@ import { Request, Response } from "express"
 
 
 
-export const getRoles = (req: Request,res: Response)=>{
+export const getRole = (req: Request,res: Response)=>{
     res.status(200).json(
         {
            success:true,
@@ -36,4 +36,16 @@ console.log(req.params.id);
         }
     )
 }
+export const deleteRole = (req: Request, res: Response) => {
 
+    // recuperar parametros de la ruta
+    console.log(req.params.id);
+  
+    res.status(200).json(
+      {
+        success: true,
+        message: "Role deleted"
+      }
+    )
+  }
+  
