@@ -13,7 +13,7 @@ app.get('/healthy',)
 
 
 //roles routes endpoint
-app.get('/api/roles', getRoles);
+app.get('/roles', getRoles);
 
 
 app.listen(PORT,()=>{
