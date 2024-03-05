@@ -1,24 +1,35 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm"
-import { Role } from "./Role";
 
-@Entity('users')
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
+import { Role } from './Role';
+import { Appointment } from './Appointments';
+
+@Entity()
 export class User {
-    @PrimaryGeneratedColumn()
-    id!: number;
-  
-    @Column({ name: "name" })
-    name!: string;
-  
-    @Column({ name: "password" })
-    password!: string;
-  
-    @Column({ name: "createdAt", type: "timestamp" })
-    createdAt!: Date;
-  
-    @Column({ name: "updatedAt", type: "timestamp" })
-    updatedAt!: Date;
-  
-    @ManyToOne(() => Role, (role) => role.users)
-    @JoinColumn({ name: "role_id" }) // campo personalizado en la bd
-    role!: Role;
-  }
+  @PrimaryGeneratedColumn()
+  id!: number;
+
+  @Column()
+  roleId!: number;
+
+  @ManyToOne(() => Role, role => role.users)
+  @JoinColumn({ name: "roleId" })
+  role!: Role;
+
+  @Column()
+  username!: string;
+
+  @Column()
+  password!: string;
+
+  @Column()
+  email!: string;
+
+  @Column()
+  fullName!: string;
+
+  @Column({ nullable: true })
+  phoneNumber!: string;
+
+  @OneToMany(() => Appointment, appointment => appointment.user)
+  appointments!: Appointment[];
+}
