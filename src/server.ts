@@ -4,10 +4,11 @@ import dotenv from "dotenv";
 import {
     createRole,
     deleteRole,
-    getRole,
+    getRoles,
     updateRole,
   } from "./controllers/roleController"
 import { AppDataSource } from "./database/db";
+import { getUsers } from "./controllers/userController";
 
 
 
@@ -35,7 +36,16 @@ app.delete("/api/roles/:id", deleteRole);
 // app.post('/api/auth/register', register)
 
 // User routes
-// app.get('/api/users', auth, isSuperAdmin, getUsers)
+app.get('/api/users' )
+app.get ('/api/users/profile')
+app.put ('api/users/profile')
+
+//Appointments
+
+app.post('api/appointments')
+app.put('/api/appointments')
+app.get('/api/appointments/{id}')
+app.get('/api/appointments')
 // app.get('/api/users/:id', getUserById)
 // app.put('/api/users/:id', updateUserById)
 // app.delete('/api/users/:id', deleteUserById)

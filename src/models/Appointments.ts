@@ -1,11 +1,11 @@
 
 
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, BaseEntity } from 'typeorm';
 import { User } from './User';
 import { Service } from './Service';
 
 @Entity()
-export class Appointment {
+export class Appointment extends BaseEntity {
   @PrimaryGeneratedColumn()
   id!: number;
 
