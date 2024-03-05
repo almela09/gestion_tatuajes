@@ -4,10 +4,11 @@ import "reflect-metadata"
 import 'dotenv/config'
 
 import { DataSource } from "typeorm"
-import { Roles1709669387677 } from "./migrations/1709669387677-roles"
-import { Users1709669403345 } from "./migrations/1709669403345-users"
-import { Services1709669414955 } from "./migrations/1709669414955-services"
-import { Appointments1709669425026 } from "./migrations/1709669425026-appointments"
+import { Roles1709670304552 } from "./migrations/1709670304552-roles"
+import { Users1709671000479 } from "./migrations/1709671000479-users"
+import { Services1709671010055 } from "./migrations/1709671010055-services"
+import { Appointments1709671019629 } from "./migrations/1709671019629-appointments"
+
 
 
 
@@ -19,7 +20,7 @@ username: process.env.DB_USER ||"root",
 password: process.env.DB_PASSWORD || "",
 database: process.env.DB_DATABASE || "",
 entities: [],
-migrations: [Roles1709669387677, Users1709669403345,Services1709669414955,Appointments1709669425026],
+migrations: [Roles1709670304552, Users1709671000479,Services1709671010055,Appointments1709671019629 ],
 synchronize: false,
 logging: false,
 })
