@@ -1,14 +1,17 @@
 -appointmentController
 -serviceController
--authController
+-authController este lo hicimos.
 
--login/register
--token
+-login/register este lo hicimos.
+-token este lo hicimos
 -comprobaciones
--middlewares
+-middlewares este lo hicimos.
+-seeders
 
 
 
--rama nueva
+-rama nueva TESTING OK.
+-.env añadido a gitignore OK.
+-En thundeclient crear colecciones para mayor orden
 
-README
+README añadir los enpoints (obligatorio) (endpoints) ruta register x ejemplo pasar body del thunderclient para mas rapidez.

@@ -42,13 +42,14 @@ app.post("api/appointments");
 app.put("/api/appointments");
 app.get("/api/appointments/{id}");
 app.get("/api/appointments");
+
 // app.get('/api/users/:id', getUserById)
 // app.put('/api/users/:id', updateUserById)
 // app.delete('/api/users/:id', deleteUserById)
 
 //services routes
 
-//appointments routes
+
 
 //la app tiene que escuchar---- RUTAS. Por ejemplo si no la tienes que mandas? un 404 o no existe.
 //Estructura básica para el servidor
