@@ -1,9 +1,13 @@
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  BaseEntity,
+} from "typeorm";
+import { Appointment } from "./Appointments";
 
-
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, BaseEntity } from 'typeorm';
-import { Appointment } from './Appointments';
-
-@Entity()
+@Entity("Service")
 export class Service extends BaseEntity {
   @PrimaryGeneratedColumn()
   id!: number;
@@ -17,6 +21,6 @@ export class Service extends BaseEntity {
   @Column({ type: "decimal", precision: 10, scale: 2 })
   price!: number;
 
-  @OneToMany(() => Appointment, appointment => appointment.service)
+  @OneToMany(() => Appointment, (appointment) => appointment.service)
   appointments!: Appointment[];
 }
