@@ -7,10 +7,13 @@ import {
   OneToMany,
   BaseEntity,
 } from "typeorm";
+
 import { Role } from "./Role";
+
 import { Appointment } from "./Appointments";
 
 @Entity("User")
+
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   id!: number;
@@ -32,9 +35,12 @@ export class User extends BaseEntity {
 
   @Column({ name: "is_active" })
   isActive!: boolean;
+
   @ManyToOne(() => Role, (role) => role.users)
+
   @JoinColumn({ name: "role_id" })
   role_id!: Role;
+  
   @OneToMany(() => Appointment, (appointment) => appointment.user)
   appointments!: Appointment[];
 }

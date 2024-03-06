@@ -1,64 +1,60 @@
-import { Request, Response } from "express"
-import { User } from "../models/User"
+import { Request, Response } from "express";
+import { User } from "../models/User";
 
 export const getUsers = async (req: Request, res: Response) => {
   try {
-    const users = await User.find(
-      {
-        select: {
-          id: true,
-          name: true,
-          email: true,
-          createdAt: true,
-          updatedAt: true,
-        }
-      }
-    )
+    const users = await User.find({
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
 
     res.status(200).json({
       success: true,
       message: "users retrieved successfully",
-      data: users
-    })
+      data: users,
+    });
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: "users cant be retrieved",
-      error: error
-    })
+      message: "users can't be retrieved",
+      error: error,
+    });
   }
-}
+};
 
 export const getUserById = async (req: Request, res: Response) => {
   try {
     const userId = req.params.id;
 
-    const user = await User.findOneBy(
-      {
-        id: parseInt(userId)
-      }
-    )
+    const user = await User.findOneBy({
+      id: parseInt(userId),
+    });
 
     if (!user) {
       return res.status(404).json({
         success: false,
         message: "user not found",
-      })
+      });
     }
 
     res.status(200).json({
       success: true,
       message: "user retrieved",
-      data: user
-    })
+      data: user,
+    });
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: "user cant be retrieved",
-      error: error
-    })
+      message: "user can't be retrieved",
+      error: error,
+    });
   }
-}
+};
 
 export const updateUserById = async (req: Request, res: Response) => {
   try {
@@ -66,17 +62,15 @@ export const updateUserById = async (req: Request, res: Response) => {
     const name = req.body.name;
 
     // validar datos
-    const user = await User.findOneBy(
-      {
-        id: parseInt(userId)
-      }
-    )
+    const user = await User.findOneBy({
+      id: parseInt(userId),
+    });
 
     if (!user) {
       return res.status(404).json({
         success: false,
         message: "user not found",
-      })
+      });
     }
 
     // tratar datos
@@ -84,10 +78,10 @@ export const updateUserById = async (req: Request, res: Response) => {
     // actualizar en BD
     const userUpdated = await User.update(
       {
-        id: parseInt(userId)
+        id: parseInt(userId),
       },
       {
-        name: name
+        name: name,
       }
     );
 
@@ -95,16 +89,17 @@ export const updateUserById = async (req: Request, res: Response) => {
     res.status(200).json({
       success: true,
       message: "user updated",
-      data: userUpdated
-    })
+      data: userUpdated,
+    });
+    
   } catch (error) {
     res.status(500).json({
       success: false,
       message: "user cant be updated",
-      error: error
-    })
+      error: error,
+    });
   }
-}
+};
 
 export const deleteUserById = async (req: Request, res: Response) => {
   try {
@@ -112,27 +107,27 @@ export const deleteUserById = async (req: Request, res: Response) => {
 
     const userToRemove: any = await User.findOneBy({
       id: parseInt(userId),
-    })
+    });
 
-    if(!userToRemove) {
+    if (!userToRemove) {
       res.status(404).json({
         success: false,
         message: "user cant be deleted",
-      })
-    }    
-    
-    const userDeleted = await User.delete(userToRemove)
+      });
+    }
+
+    const userDeleted = await User.delete(userToRemove);
 
     res.status(200).json({
       success: false,
       message: "user deleted",
-      data: userDeleted
-    })
+      data: userDeleted,
+    });
   } catch (error) {
     res.status(500).json({
       success: false,
       message: "user cant be deleted",
-      error: error
-    })
+      error: error,
+    });
   }
-}
+};
