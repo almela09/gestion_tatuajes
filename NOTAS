@@ -12,6 +12,9 @@
 
 -rama nueva TESTING OK.
 -.env añadido a gitignore OK.
--En thundeclient crear colecciones para mayor orden
+-En thundeclient crear colecciones para mayor orden (FALTA)
 
-README añadir los enpoints (obligatorio) (endpoints) ruta register x ejemplo pasar body del thunderclient para mas rapidez.
+README añadir los enpoints (obligatorio) (endpoints) ruta register x ejemplo pasar body del thunderclient para mas rapidez. añadir si es para admin o superadmin.
+
+REVISAR las rutas en el README.
+

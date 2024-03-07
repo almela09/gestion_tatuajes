@@ -9,7 +9,7 @@ import {
 import { User } from "./User";
 import { Service } from "./Service";
 
-@Entity()
+@Entity('Appointments')
 export class Appointment extends BaseEntity {
   @PrimaryGeneratedColumn()
   id!: number;
@@ -18,6 +18,7 @@ export class Appointment extends BaseEntity {
   userId!: number;
 
   @ManyToOne(() => User, (user) => user.appointments)
+  
   
   @JoinColumn({ name: "userId" })
   user!: User;

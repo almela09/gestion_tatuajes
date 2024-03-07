@@ -8,6 +8,7 @@ import {
 } from "./controllers/roleController";
 import { AppDataSource } from "./database/db";
 import { getUserById, getUsers, updateUserById } from "./controllers/userController";
+import { createAppointment, getAppointmentById, getMyAppointments, updateAppointmentById} from "./controllers/appointmentController";
 
 dotenv.config();
 
@@ -37,17 +38,14 @@ app.get("/api/users/profile", getUserById);
 app.put("api/users/profile",updateUserById);
 
 //Appointments
+app.post("/api/appointments", createAppointment); //para crear la cita
+app.get("/api/myappointments", getMyAppointments); //ver mi cita
+app.put("/api/appointments/:id", updateAppointmentById); //modificar/actualizar cita
+app.get("/api/appointments/:id", getAppointmentById); //ver cita por ID
 
-app.post("api/appointments");
-app.put("/api/appointments");
-app.get("/api/appointments/{id}"); //getAppointmentsById
-app.get("/api/appointments");
 
-// app.get('/api/users/:id', getUserById)
-// app.put('/api/users/:id', updateUserById)
-// app.delete('/api/users/:id', deleteUserById)
 
-//services routes
+
 
 
 
