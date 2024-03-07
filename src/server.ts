@@ -7,7 +7,7 @@ import {
   updateRole,
 } from "./controllers/roleController";
 import { AppDataSource } from "./database/db";
-import { getUsers } from "./controllers/userController";
+import { getUserById, getUsers, updateUserById } from "./controllers/userController";
 
 dotenv.config();
 
@@ -32,15 +32,15 @@ app.delete("/api/roles/:id", deleteRole);
 // app.post('/api/auth/register', register)
 
 // User routes
-app.get("/api/users");
-app.get("/api/users/profile");
-app.put("api/users/profile");
+app.get("/api/users", getUsers );
+app.get("/api/users/profile", getUserById);
+app.put("api/users/profile",updateUserById);
 
 //Appointments
 
 app.post("api/appointments");
 app.put("/api/appointments");
-app.get("/api/appointments/{id}");
+app.get("/api/appointments/{id}"); //getAppointmentsById
 app.get("/api/appointments");
 
 // app.get('/api/users/:id', getUserById)

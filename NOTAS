@@ -1,5 +1,5 @@
--appointmentController
--serviceController
+-appointmentController estructura básica DONE.
+-serviceController // puede que funcione, hay que probarlo.
 -authController este lo hicimos.
 
 -login/register este lo hicimos.

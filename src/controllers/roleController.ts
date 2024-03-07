@@ -35,7 +35,7 @@ export const createRole = async (req: Request, res: Response) => {
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: "role cant be created",
+      message: "role can't be created",
       error: error,
     });
   }
