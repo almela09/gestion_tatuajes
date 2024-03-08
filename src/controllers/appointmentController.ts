@@ -1,15 +1,20 @@
 //añadir----completar los campos que faltan.
-import { Request, Response } from "express";
+//import { Request, Response } from "express";
 
+import { Request, Response } from "express";
 import { Appointment } from "../models/Appointments";
+import { CLIENT_RENEG_LIMIT } from "tls";
 
 //CREAR LA CITA
 
 export const createAppointment = async (req: Request, res: Response) => {
+  
   try {
+    console.log(req.tokenData)
     const userId = req.tokenData.userId;
     const serviceId = req.body.serviceId;
     const appointmentDate = req.body.appointmentDate;
+    
 
     if (!serviceId || !appointmentDate) {
       return res.status(400).json({
