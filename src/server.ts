@@ -9,6 +9,7 @@ import {
 import { AppDataSource } from "./database/db";
 import { getUserById, getUsers, updateUserById } from "./controllers/userController";
 import { createAppointment, getAppointmentById, getMyAppointments, updateAppointmentById} from "./controllers/appointmentController";
+import { auth } from "./database/middlewares/auth";
 
 dotenv.config();
 
@@ -38,10 +39,10 @@ app.get("/api/users/profile", getUserById);
 app.put("api/users/profile",updateUserById);
 
 //Appointments
-app.post("/api/appointments", createAppointment); //para crear la cita
-app.get("/api/myappointments", getMyAppointments); //ver mi cita
-app.put("/api/appointments/:id", updateAppointmentById); //modificar/actualizar cita
-app.get("/api/appointments/:id", getAppointmentById); //ver cita por ID
+app.post("/api/appointments", auth, createAppointment); //para crear la cita
+app.get("/api/myappointments", auth,getMyAppointments); //ver mi cita
+app.put("/api/appointments/:id",auth, updateAppointmentById); //modificar/actualizar cita
+app.get("/api/appointments/:id",auth, getAppointmentById); //ver cita por ID
 
 
 
