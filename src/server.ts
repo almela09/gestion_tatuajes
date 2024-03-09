@@ -10,6 +10,7 @@ import { AppDataSource } from "./database/db";
 import { getUserById, getUsers, updateUserById } from "./controllers/userController";
 import { createAppointment, getAppointmentById, getMyAppointments, updateAppointmentById} from "./controllers/appointmentController";
 import { auth } from "./database/middlewares/auth";
+import { login, register } from "./controllers/authController";
 
 dotenv.config();
 
@@ -24,14 +25,18 @@ app.get("/api/healthy", (req, res) => {
   });
 });
 
+
+//AUTH routes
+app.post ('/api/auth/register', register)
+app.post('/api/auth/login', login)
+
+
 //Roles routes -endpoint.
 app.get("/api/roles", getRoles); //lo modificamos en roleControllers.
 app.post("/api/roles", createRole);
 app.put("/api/roles/:id", updateRole); //cambiar informacion de todas las columnas /// PARAMETRO DE RUTA :id, significa que este dato es dinámico.
 app.delete("/api/roles/:id", deleteRole);
 
-//AUTH routes
-// app.post('/api/auth/register', register)
 
 // User routes
 app.get("/api/users", getUsers );

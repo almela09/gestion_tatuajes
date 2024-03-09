@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, Response} from "express";
 
 import bcrypt from "bcrypt";
 
@@ -13,8 +13,7 @@ export const register = async (req: Request, res: Response) => {
 
     const email = req.body.email;
     const password = req.body.password;
-    // const firstName = req.body.first_name
-    // const lastName = req.body.last_name
+  
 
     // validamos datos
 
