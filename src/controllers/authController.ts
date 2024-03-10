@@ -5,7 +5,7 @@ import bcrypt from "bcrypt";
 import { User } from "../models/User";
 
 import jwt from "jsonwebtoken";
-// import { log } from "console";
+
 
 export const register = async (req: Request, res: Response) => {
   try {
@@ -41,8 +41,7 @@ export const register = async (req: Request, res: Response) => {
     const newUser = await User.create({
       email: email,
       password: passwordEncrypted,
-      // first_name: firstName,
-      // last_name: lastName
+      
     }).save();
 
     res.status(201).json({
@@ -51,6 +50,7 @@ export const register = async (req: Request, res: Response) => {
       data: newUser,
     });
   } catch (error) {
+    console.error(error);
     res.status(500).json({
       success: false,
       message: "user can't be registered",
@@ -66,8 +66,7 @@ export const login = async (req: Request, res: Response) => {
     const email = req.body.email;
     const password = req.body.password;
 
-    console.log("123");
-
+    
     // validacion de email password
 
     if (!email || !password) {
@@ -77,59 +76,40 @@ export const login = async (req: Request, res: Response) => {
       });
     }
     const user = await User.findOne({
-      where: {
-        email: email,
-      },
-      relations: {
-        role_id: true,
-      },
-      select: {
-        id: true,
-        password: true,
-        email: true,
-        role_id: {
-          id: true,
-          name: true,
-        },
-      },
+      where: { email: email },
+      relations: ["role"], // Se carga la relación 'role'
+      select: ["userId", "password", "email", "role"], // Selecciona las propiedades necesarias, incluida la relación
     });
-    console.log(user);
-
+    
     if (!user) {
       return res.status(400).json({
         success: false,
-        message: "Email o Pasword invalid",
+        message: "Email o Password invalid",
       });
     }
-    console.log("456");
+    
+    // Verifica la contraseña
     const isValidPassword = bcrypt.compareSync(password, user.password);
-    console.log("789");
     if (!isValidPassword) {
       return res.status(400).json({
         success: false,
-        message: "Email o Pasword invalid",
+        message: "Email o Password invalid",
       });
     }
-    console.log(100);
-
-    const token = jwt.sign(
-      {
-        userId: user.id,
-        roleName: user.role_id.name,
-      },
-      process.env.JWT_SECRET as string,
-      {
-        expiresIn: "2h",
-      }
-    );
-
-    console.log(112);
-
+    
+    const token = jwt.sign({
+      userId: user.userId,
+      roleName: user.role.name, // Accede a través de la propiedad 'role' y luego 'name'
+    }, process.env.JWT_SECRET as string, {
+      expiresIn: "2h",
+    });
+    
     res.status(200).json({
       success: true,
-      message: "user logged",
+      message: "User logged",
       token: token,
     });
+    
   } catch (error: any) {
     res.status(500).json({
       success: false,

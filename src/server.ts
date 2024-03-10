@@ -9,8 +9,10 @@ import {
 import { AppDataSource } from "./database/db";
 import { getUserById, getUsers, updateUserById } from "./controllers/userController";
 import { createAppointment, getAppointmentById, getMyAppointments, updateAppointmentById} from "./controllers/appointmentController";
-import { auth } from "./database/middlewares/auth";
+// import { auth } from "./database/middlewares/auth";
 import { login, register } from "./controllers/authController";
+// import { isSuperAdmin } from "./database/middlewares/isSuperAdmin";
+import { createService, deleteService, getService } from "./controllers/serviceController";
 
 dotenv.config();
 
@@ -26,28 +28,34 @@ app.get("/api/healthy", (req, res) => {
 });
 
 
-//AUTH routes
-app.post ('/api/auth/register', register)
-app.post('/api/auth/login', login)
+//AUTH routes -endpoint.
+app.post ('/api/auth/register')
+app.post('/api/auth/login')
 
 
 //Roles routes -endpoint.
-app.get("/api/roles", getRoles); //lo modificamos en roleControllers.
-app.post("/api/roles", createRole);
-app.put("/api/roles/:id", updateRole); //cambiar informacion de todas las columnas /// PARAMETRO DE RUTA :id, significa que este dato es dinámico.
-app.delete("/api/roles/:id", deleteRole);
+app.get("/api/roles"); //lo modificamos en roleControllers.
+app.post("/api/roles");
+app.put("/api/roles/:id"); //cambiar informacion de todas las columnas /// PARAMETRO DE RUTA :id, significa que este dato es dinámico.
+app.delete("/api/roles/:id");
 
 
-// User routes
-app.get("/api/users", getUsers );
-app.get("/api/users/profile", getUserById);
-app.put("api/users/profile",updateUserById);
+// User routes -endpoint.
+app.get("/api/users");
+app.get("/api/users/profile");
+app.put("api/users/profile");
 
-//Appointments
-app.post("/api/appointments", auth, createAppointment); //para crear la cita
-app.get("/api/myappointments", auth,getMyAppointments); //ver mi cita
-app.put("/api/appointments/:id",auth, updateAppointmentById); //modificar/actualizar cita
-app.get("/api/appointments/:id",auth, getAppointmentById); //ver cita por ID
+
+//Services routes -endpoint.
+app.post ('/api/services', );
+app.get( '/api/services', );
+app.delete('/api/services/:id');
+
+//Appointments routes -endpoint.
+app.post("/api/appointments", ); //para crear la cita
+app.get("/api/myappointments"); //ver mi cita
+app.put("/api/appointments/:id"); //modificar/actualizar cita
+app.get("/api/appointments/:id"); //ver cita por ID
 
 
 

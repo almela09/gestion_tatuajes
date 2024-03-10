@@ -4,14 +4,15 @@ import "reflect-metadata";
 import "dotenv/config";
 
 import { DataSource } from "typeorm";
-import { Roles1709670304552 } from "./migrations/1709670304552-roles";
-import { Users1709671000479 } from "./migrations/1709671000479-users";
-import { Services1709671010055 } from "./migrations/1709671010055-services";
-import { Appointments1709671019629 } from "./migrations/1709671019629-appointments";
+
 import { Role } from "../models/Role";
 import { User } from "../models/User";
 import { Service } from "../models/Service";
-import { Appointment } from "../models/Appointments";
+import { Appoinment } from "../models/Appointment";
+import { Roles1710061991148 } from "./migrations/1710061991148-roles";
+import { Users1710062022422 } from "./migrations/1710062022422-users";
+import { Services1710062052390 } from "./migrations/1710062052390-services";
+import { Appointments1710062080834 } from "./migrations/1710062080834-appointments";
 
 export const AppDataSource = new DataSource({
   type: "mysql",
@@ -20,12 +21,13 @@ export const AppDataSource = new DataSource({
   username: process.env.DB_USER || "root",
   password: process.env.DB_PASSWORD || "",
   database: process.env.DB_DATABASE || "",
-  entities: [Role, User, Service, Appointment],
+  entities: [User,Role,Service,Appoinment],
   migrations: [
-    Roles1709670304552,
-    Users1709671000479,
-    Services1709671010055,
-    Appointments1709671019629,
+    Roles1710061991148,
+    Users1710062022422,
+    Services1710062052390,
+    Appointments1710062080834
+    
   ],
   synchronize: false,
   logging: false,

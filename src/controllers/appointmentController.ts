@@ -1,9 +1,8 @@
 //añadir----completar los campos que faltan.
-//import { Request, Response } from "express";
 
 import { Request, Response } from "express";
-import { Appointment } from "../models/Appointments";
-import { CLIENT_RENEG_LIMIT } from "tls";
+import { Appointment } from "../models/Appointment";
+
 
 //CREAR LA CITA
 
@@ -46,7 +45,7 @@ export const createAppointment = async (req: Request, res: Response) => {
   }
 };
 
-//RECUPERAR MIS CITAS
+//Recuperar una cita
 export const getMyAppointments = async (req: Request, res: Response) => {
   try {
     const userId = req.tokenData.userId;

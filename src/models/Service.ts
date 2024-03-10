@@ -5,22 +5,29 @@ import {
   OneToMany,
   BaseEntity,
 } from "typeorm";
-import { Appointment } from "./Appointments";
+import { Appoinment } from "./Appointment";
 
-@Entity("Service")
+@Entity("services")
 export class Service extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  id!: number;
 
-  @Column()
-  name!: string;
+    @PrimaryGeneratedColumn()
+    id!: number
 
-  @Column({ type: "text", nullable: true })
-  description!: string;
+    @Column({ name: 'service_name' })
+    serviceName!: string
 
-  @Column({ type: "decimal", precision: 10, scale: 2 })
-  price!: number;
+    @Column({ name: 'description' })
+    description!: string
 
-  @OneToMany(() => Appointment, (appointment) => appointment.service)
-  appointments!: Appointment[];
+    @Column({ name: 'created_at' })
+    createdAt!: Date
+
+    @Column({ name: 'updated_at' })
+    updatedAt!: Date
+
+
+    @OneToMany(() => Appoinment, (appointment) => appointment.service)
+    appointments!: Appoinment[];
+
 }
+
