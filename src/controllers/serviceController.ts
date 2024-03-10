@@ -2,53 +2,32 @@
 import { Request, Response } from "express";
 import { Service } from "../models/Service";
 
-export const getService = (req: Request, res: Response) => {
-  res.status(200).json({
-    success: true,
-    message: "Service retrieved successfuly",
-  });
-};
-
-export const createService = async (req: Request, res: Response) => {
+export const getServices = async (req: Request, res: Response) => {
   try {
-    // recuperar la info a traves del body
-    console.log(req.body);
-    const name = req.body.name;
+      const services = await Service.find(
+          {
+              select: {
+                  id: true,
+                  serviceName: true,
+                  description: true,
+                  createdAt: true,
+                  updatedAt: true,
+              }
+          }
+      )
 
-    const newService = await Service.create({
-      //aqui van movidas
-    }).save();
+      res.status(200).json({
+          suceess: true,
+          message: "services retrieved successfully",
+          data: services
+      })
 
-    res.status(201).json({
-      success: true,
-      message: "Service created",
-      data: newService,
-    });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "Service can't be created",
-      error: error,
-    });
+      res.status(500).json({
+          success: false,
+          message: "services cant be retrieved",
+          error: error
+      })
   }
-};
 
-export const updateService = (req: Request, res: Response) => {
-  // recuperar parametros de la ruta
-  console.log(req.params.id);
-
-  res.status(200).json({
-    success: true,
-    message: "Service updated",
-  });
-};
-
-export const deleteService = (req: Request, res: Response) => {
-  // recuperar parametros de la ruta
-  console.log(req.params.id);
-
-  res.status(200).json({
-    success: true,
-    message: "Service deleted",
-  });
-};
+}

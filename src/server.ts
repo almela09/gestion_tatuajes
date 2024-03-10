@@ -7,12 +7,15 @@ import {
   updateRole,
 } from "./controllers/roleController";
 import { AppDataSource } from "./database/db";
-import { getUserById, getUsers, updateUserById } from "./controllers/userController";
-import { createAppointment, getAppointmentById, getMyAppointments, updateAppointmentById} from "./controllers/appointmentController";
-// import { auth } from "./database/middlewares/auth";
+import { getProfile, getUsers, updateUserById } from "./controllers/userController";
+import { auth } from "./database/middlewares/auth";
 import { login, register } from "./controllers/authController";
-// import { isSuperAdmin } from "./database/middlewares/isSuperAdmin";
-import { createService, deleteService, getService } from "./controllers/serviceController";
+import { isSuperAdmin } from "./database/middlewares/isSuperAdmin";
+import { getServices } from "./controllers/serviceController";
+import { createAppointment, getAppointmentById, getMyAppointments, updateAppointmentById } from "./controllers/appointmentController";
+
+
+
 
 dotenv.config();
 
@@ -29,33 +32,33 @@ app.get("/api/healthy", (req, res) => {
 
 
 //AUTH routes -endpoint.
-app.post ('/api/auth/register')
-app.post('/api/auth/login')
+app.post ('/api/auth/register', register);
+app.post('/api/auth/login', login);
 
 
 //Roles routes -endpoint.
-app.get("/api/roles"); //lo modificamos en roleControllers.
-app.post("/api/roles");
-app.put("/api/roles/:id"); //cambiar informacion de todas las columnas /// PARAMETRO DE RUTA :id, significa que este dato es dinámico.
-app.delete("/api/roles/:id");
+app.get("/api/roles", getRoles); //lo modificamos en roleControllers.
+app.post("/api/roles", createRole);
+app.put("/api/roles/:id",updateRole); //cambiar informacion de todas las columnas /// PARAMETRO DE RUTA :id, significa que este dato es dinámico.
+app.delete("/api/roles/:id",deleteRole);
 
 
 // User routes -endpoint.
-app.get("/api/users");
-app.get("/api/users/profile");
-app.put("api/users/profile");
+app.get("/api/users",auth,getUsers, isSuperAdmin);
+app.get("/api/users/profile",auth, getProfile);
+app.put("api/users/profile",auth, updateUserById);
 
 
 //Services routes -endpoint.
-app.post ('/api/services', );
-app.get( '/api/services', );
-app.delete('/api/services/:id');
+
+app.get( '/api/services', getServices);
+
 
 //Appointments routes -endpoint.
-app.post("/api/appointments", ); //para crear la cita
-app.get("/api/myappointments"); //ver mi cita
-app.put("/api/appointments/:id"); //modificar/actualizar cita
-app.get("/api/appointments/:id"); //ver cita por ID
+app.post("/api/appointments", auth, createAppointment ); //para crear la cita
+app.get("/api/myappointments/:id",auth, getAppointmentById); //ver mi cita
+app.put("/api/appointments/:id",auth, updateAppointmentById); //modificar/actualizar cita
+app.get("/api/appointments/:id",auth,getMyAppointments); //ver cita por ID
 
 
 

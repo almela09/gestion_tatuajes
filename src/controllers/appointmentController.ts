@@ -1,150 +1,194 @@
 //añadir----completar los campos que faltan.
 
 import { Request, Response } from "express";
-import { Appointment } from "../models/Appointment";
+import { Appoinment } from "../models/Appointment";
 
 
 //CREAR LA CITA
 
 export const createAppointment = async (req: Request, res: Response) => {
-  
-  try {
-    console.log(req.tokenData)
-    const userId = req.tokenData.userId;
-    const serviceId = req.body.serviceId;
-    const appointmentDate = req.body.appointmentDate;
-    
+    // Recuperar la info
+    try {
+        const userId = req.tokenData.userId
+        const serviceId = req.body.serviceId
+        const appointmentDate = req.body.appointmentDate
 
-    if (!serviceId || !appointmentDate) {
-      return res.status(400).json({
-        success: false,
-        message: "Service ID and date are needed",
-      });
+        if (!serviceId || !appointmentDate) {
+            return res.status(400).json({
+                success: false,
+                message: "Service ID and date are needed",
+            })
+        }
+        const newAppointment = await Appoinment.create(
+            {
+                appointmentDate: appointmentDate,
+                user: {
+                    id: userId
+                },
+                service: {
+                    id: serviceId
+                }
+            }
+        ).save()
+
+        res.status(201).json({
+            success: true,
+            message: "Appointment created successfully",
+            data: newAppointment
+        })
+
+    } catch (error: any) {
+        res.status(500).json({
+            success: false,
+            message: "Appointment can't be created",
+            error: error.message
+        })
     }
+}
 
-    const newAppointment = Appointment.create({
-      userId,
-      serviceId,
-      appointmentDate,
-      notes: req.body.notes || "",
-    });
-
-    await newAppointment.save();
-
-    res.status(201).json({
-      success: true,
-      message: "Appointment created successfully",
-      data: newAppointment,
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "Appointment can't be created",
-      error: error,
-    });
-  }
-};
-
-//Recuperar una cita
-export const getMyAppointments = async (req: Request, res: Response) => {
-  try {
-    const userId = req.tokenData.userId;
-
-    const myAppointments = await Appointment.find({
-      where: { userId: userId }, // Ajuste aquí
-      relations: ["user", "service"],
-    });
-
-    if (myAppointments.length === 0) {
-      return res.status(404).json({
-        success: false,
-        message: "No appointments found",
-      });
-    }
-
-    res.status(200).json({
-      success: true,
-      message: "Appointments retrieved successfully",
-      data: myAppointments,
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "Appointments can't be retrieved",
-      error: error,
-    });
-  }
-};
+// RECUPERAR 1 CITA:
 
 
-//RECUPERAR CITA POR ID
 export const getAppointmentById = async (req: Request, res: Response) => {
-  try {
-    const userId = req.tokenData.userId;
-    const appointmentId = req.params.id;
+    try {
+        const userId = req.tokenData.userId
+        const appointmentId = req.params.id
 
-    const appointmentFound = await Appointment.findOne({
-      where: { id: parseInt(appointmentId), userId },
-      relations: ["user", "service"],
-    });
+        const appointmentFound = await Appoinment.findOne(
+            {
+                where: {
+                    id: parseInt(appointmentId),
+                    user: {
+                        id: userId
+                    }
+                },
+                relations: {
+                    service: true
+                }
+            }
+        )
 
-    if (!appointmentFound) {
-      return res.status(404).json({
-        success: false,
-        message: "Appointment not found",
-      });
+        if (!appointmentFound) {
+            res.status(404).json(
+                {
+                    success: false,
+                    message: "appointment not found"
+                }
+            )
+        }
+
+        res.status(200).json({
+            suceess: true,
+            message: "Appointmen retrieved successfully",
+            data: appointmentFound
+        })
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Appointment cant be retrieved",
+            error: error
+        })
     }
 
-    res.status(200).json({
-      success: true,
-      message: "Appointment retrieved successfully",
-      data: appointmentFound,
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "Appointment can't be retrieved",
-      error: error,
-    });
-  }
-};
+}
 
-//MODIFICAR UNA CITA POR ID
+// RECUPERAR MIS CITAS
+
+export const getMyAppointments = async (req: Request, res: Response) => {
+    console.log(req.tokenData);
+
+    try {
+        const userId = req.tokenData.userId
+
+        const myAppointments = await Appoinment.find({
+            where: {
+                user: {
+                    id: userId
+                }
+            },
+            relations: {
+                user: true,
+                service: true
+            }
+        })
+        if (!myAppointments) {
+            res.status(404).json(
+                {
+                    success: false,
+                    message: "appointments not found"
+                }
+            )
+        }
+
+        res.status(200).json(
+            {
+                success: true,
+                message: "Appointments retrieved",
+                data: myAppointments
+            }
+        )
+
+
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Apointments can't be retrieved",
+        }
+        )
+    }
+}
+
+// MODIFICAR CITA
+
 export const updateAppointmentById = async (req: Request, res: Response) => {
-  try {
-    const appointmentId = req.params.id;
-    const { serviceId, appointmentDate } = req.body;
+    try {
+        const appointmentId = req.params.id
+        const serviceId = req.body.serviceId
+        const appointmentDate = req.body.appoinTmentDate
 
-    let appointmentToUpdate = await Appointment.findOne({
-      where: {
-        id: parseInt(appointmentId),
-        userId: req.tokenData.userId, 
-      },
-    });
+        const appointmentToUpdate = await Appoinment.findOne(
+            {
+                where: {
+                    id: parseInt(appointmentId),
+                    user: {
+                        id: req.tokenData.userId
+                    }
+                }
+            }
+        )
 
-    if (!appointmentToUpdate) {
-      return res.status(404).json({
-        success: false,
-        message: "Appointment not found",
-      });
+        if (!appointmentToUpdate) {
+            return res.status(404).json({
+                success: false,
+                messagge: "appointment not found",
+            })
+        }
+
+        const appointmentUpdated = await Appoinment.update(
+            {
+                id: parseInt(appointmentId)
+            },
+            {
+                service: {
+                    id: parseInt(serviceId)
+                },
+                appointmentDate: appointmentDate
+            }
+        )
+        res.status(200).json({
+            success: true,
+            messagge: "service updeted",
+            data: appointmentUpdated
+        })
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            messagge: "Appointment can't be  updated",
+            error: error
+        })
+
     }
-
-    // Actualiza los campos necesarios
-    appointmentToUpdate.serviceId = serviceId;
-    appointmentToUpdate.appointmentDate = appointmentDate;
-
-    await appointmentToUpdate.save();
-
-    res.status(200).json({
-      success: true,
-      message: "Appointment updated successfully",
-      data: appointmentToUpdate,
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "Appointment can't be updated",
-      error: error,
-    });
-  }
-};
+}
