@@ -1,3 +1,11 @@
+
+
+
+
+###Al lanzar la peticion POST de register no me devuelve el objeto, me da como resultado UNDEFINED.GET USERS ME PASA LO MISMO UNDEFINED
+
+
+
 -appointmentController estructura básica DONE.
 -serviceController funciona OK
 -authController este lo hicimos.
@@ -16,11 +24,5 @@
 
 README añadir los enpoints (obligatorio) (endpoints) ruta register x ejemplo pasar body del thunderclient para mas rapidez. añadir si es para admin o superadmin.
 
-REVISAR las rutas en el README.
-
 ERROR HTPP 500 SIN SOLUCIONAR.
 NO VOY A MERGEAR MASTER CON TESTING PORQUE MUCHOS ENDPOINTS NO RULAN.
-
-
-al lanzar la peticion POST de register no me devuelve el objeto, me da como resultado UNDEFINED.
-GET USERS ME PASA LO MISMO UNDEFINED
