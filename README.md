@@ -56,6 +56,6 @@ Se trata de una aplicacion en la que los usuarios podrán registrarse, iniciar s
 
 #Script Compilacion
 
-``  npm install --save-dev nodemon``
+``  "dev": "nodemon ./src/server.ts"  ``
 
 
