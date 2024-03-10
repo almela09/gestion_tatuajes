@@ -9,7 +9,7 @@ import {
 import { AppDataSource } from "./database/db";
 import { getProfile, getUsers, updateUserById } from "./controllers/userController";
 import { auth } from "./database/middlewares/auth";
-import { login, register } from "./controllers/authController";
+import {  register } from "./controllers/authController";
 import { isSuperAdmin } from "./database/middlewares/isSuperAdmin";
 import { getServices } from "./controllers/serviceController";
 import { createAppointment, getAppointmentById, getMyAppointments, updateAppointmentById } from "./controllers/appointmentController";
@@ -32,8 +32,8 @@ app.get("/api/healthy", (req, res) => {
 
 
 //AUTH routes -endpoint.
-app.post ('/api/auth/register', register);
-app.post('/api/auth/login', login);
+app.post ('/api/register', register);
+app.post('/api/auth/login');
 
 
 //Roles routes -endpoint.
@@ -51,7 +51,7 @@ app.put("api/users/profile",auth, updateUserById);
 
 //Services routes -endpoint.
 
-app.get( '/api/services', getServices);
+app.get( '/api/services', getServices); //OKEY
 
 
 //Appointments routes -endpoint.

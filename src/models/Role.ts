@@ -5,17 +5,17 @@ import {
   OneToMany,
   BaseEntity,
 } from "typeorm";
+
 import { User } from "./User";
 
-@Entity("roles") // Correctamente alineado con el nombre de la tabla en MySQL
+@Entity('roles')
 export class Role extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  role_id!: number; //esto lo he cambiado
+    @PrimaryGeneratedColumn()
+    id!: number
 
-  @Column()
-  name!: string;
+    @Column({ name: 'title' })
+    name!: string
 
-  
-  @OneToMany(() => User, (user) => user.role)
-  users!: User[];
+    @OneToMany(() => User, (user) => user.role)
+    users!: User[];
 }

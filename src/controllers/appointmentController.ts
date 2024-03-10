@@ -162,7 +162,7 @@ export const updateAppointmentById = async (req: Request, res: Response) => {
         if (!appointmentToUpdate) {
             return res.status(404).json({
                 success: false,
-                messagge: "appointment not found",
+                message: "appointment not found",
             })
         }
 

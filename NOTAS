@@ -1,5 +1,5 @@
 -appointmentController estructura básica DONE.
--serviceController // puede que funcione, hay que probarlo.
+-serviceController funciona OK
 -authController este lo hicimos.
 
 -login/register este lo hicimos.
@@ -18,3 +18,9 @@ README añadir los enpoints (obligatorio) (endpoints) ruta register x ejemplo pa
 
 REVISAR las rutas en el README.
 
+ERROR HTPP 500 SIN SOLUCIONAR.
+NO VOY A MERGEAR MASTER CON TESTING PORQUE MUCHOS ENDPOINTS NO RULAN.
+
+
+al lanzar la peticion POST de register no me devuelve el objeto, me da como resultado UNDEFINED.
+GET USERS ME PASA LO MISMO UNDEFINED

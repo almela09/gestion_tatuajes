@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { User } from "../models/User";
 
 export const getUsers = async (req: Request, res: Response) => {
-
+console.log(req.body);
   try {
       // recuperar la data
       const users = await User.find()
