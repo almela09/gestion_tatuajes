@@ -1,5 +1,6 @@
 import express, { Application } from "express"; // desde que librería? express.
 import dotenv from "dotenv";
+dotenv.config();
 import {
   createRole,
   deleteRole,
@@ -9,17 +10,21 @@ import {
 import { AppDataSource } from "./database/db";
 import { getProfile, getUsers, updateUserById } from "./controllers/userController";
 import { auth } from "./database/middlewares/auth";
-import {  register } from "./controllers/authController";
+
 import { isSuperAdmin } from "./database/middlewares/isSuperAdmin";
 import { getServices } from "./controllers/serviceController";
 import { createAppointment, getAppointmentById, getMyAppointments, updateAppointmentById } from "./controllers/appointmentController";
+import { register } from "./controllers/authController";
 
 
 
 
-dotenv.config();
+
 
 const app: Application = express(); //ejecutar funcion y guardar en una variable.
+
+
+app.use(express.json()); //para darle formato json
 
 const PORT = process.env.PORT || 4000;
 
@@ -32,7 +37,7 @@ app.get("/api/healthy", (req, res) => {
 
 
 //AUTH routes -endpoint.
-app.post ('/api/register', register);
+app.post ('/api/auth/register', register);
 app.post('/api/auth/login');
 
 
