@@ -15,6 +15,7 @@ import { getServices } from "./controllers/serviceController";
 import {
   createAppointment,
   getAppointmentById,
+  getMyAppointments,
   updateAppointmentById,
 } from "./controllers/appointmentController";
 
@@ -52,6 +53,7 @@ app.get("/api/services", getServices);
 app.post("/api/appointments", auth, createAppointment); //para crear la cita
 app.get("/api/myappointments/:id", auth, getAppointmentById); //ver mi cita
 app.put("/api/appointments/:id", auth, updateAppointmentById); //modificar/actualizar cita
+app.get("/api/myappointments/", auth, getMyAppointments);
 
 
 //Estructura básica para el servidor
