@@ -7,74 +7,55 @@ import { User } from "../models/User";
 import jwt from "jsonwebtoken";
 
 
-//ME DA UNDEFINED AL MANDARLE INFO EN VEZ DE DEVOLVERME EL OBJETO!!!!!!!!!!!
-
 //Registro con email  y password
-export const register =  async (request: Request, res: Response) => {
-  const body = await request.body
-  console.log(body);
+export const register = async (req: Request, res: Response) => {
+  try {
+    const email = req.body.email;
+    const password = req.body.password;
+    if (password.length < 6 || password.length > 6) {
+      return res.status(400).json({
+        success: false,
+        message: "la contraseña debe tener 6 caracteres",
+      });
+    }
 
+    const validEmail = /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
+    if (!validEmail.test(email)) {
+      return res.status(400).json({
+        success: false,
+        message: "format email invalid",
+      });
+    }
 
-  
-  // try {
-  //     const email = req.body.email
-  //     const password = req.body.password
-  //     if (password.length < 6 || password.length > 6) {
-  //         return res.status(400).json({
-  //             success: false,
-  //             message: "la contraseña debe tener 6 caracteres"
-  //         })
-  //     }
+    // encriptar la contraseña
 
-  //     const validEmail = /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
-  //     if (!validEmail.test(email)) {
-  //         return res.status(400).json(
-  //             {
-  //                 success: false,
-  //                 message: "format email invalid"
-  //             }
-  //         )
-  //     }
-  //     // encriptar la contraseña
+    const passwordEncrypted = bcrypt.hashSync(password, 6);
 
-  //     const passwordEncrypted = bcrypt.hashSync(password, 6)
-
-  //     //aqui se guardarn los datos del registro
-
-  //     const newUser = await User.create({
-  //         email: email,
-  //         password: passwordEncrypted,
-
-  //     }).save()
-  //     res.status(201).json(
-  //         {
-  //             success: true,
-  //             message: "User registered succesfully"
-
-  //         }
-
-  //     )
-
-  // } catch (error) {
-  //     res.status(500).json({
-  //         success: false,
-  //         message: "user cant be registered",
-  //         error:error
-
-  //     })
-
-  // }
+    //aqui se guardaran los datos del registro
+    const newUser = await User.create({
+      email: email,
+      password: passwordEncrypted,
+    }).save();
+    res.status(201).json({
+      success: true,
+      message: "User registered succesfully",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "user cant be registered",
+      error: error,
+    });
+  }
 };
 
-//EL LOGIN AQUI
+//Esto es el login
 export const login = async (req: Request, res: Response) => {
   try {
     //recuperar la info
 
     const email = req.body.email;
     const password = req.body.password;
-
-    console.log("123");
 
     // validacion de email password
 
@@ -101,24 +82,22 @@ export const login = async (req: Request, res: Response) => {
         },
       },
     });
-    console.log(user);
-
+    
     if (!user) {
       return res.status(400).json({
         success: false,
         message: "Email o Pasword invalid",
       });
     }
-    console.log("456");
+
     const isValidPassword = bcrypt.compareSync(password, user.password);
-    console.log("789");
+
     if (!isValidPassword) {
       return res.status(400).json({
         success: false,
         message: "Email o Pasword invalid",
       });
     }
-    console.log(100);
 
     const token = jwt.sign(
       {
@@ -130,8 +109,6 @@ export const login = async (req: Request, res: Response) => {
         expiresIn: "2h",
       }
     );
-
-    console.log(112);
 
     res.status(200).json({
       success: true,

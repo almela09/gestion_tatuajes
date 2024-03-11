@@ -21,13 +21,12 @@ export const AppDataSource = new DataSource({
   username: process.env.DB_USER || "root",
   password: process.env.DB_PASSWORD || "",
   database: process.env.DB_DATABASE || "",
-  entities: [User,Role,Service,Appoinment],
+  entities: [User, Role, Service, Appoinment],
   migrations: [
     Roles1710061991148,
     Users1710062022422,
     Services1710062052390,
-    Appointments1710062080834
-    
+    Appointments1710062080834,
   ],
   synchronize: false,
   logging: false,

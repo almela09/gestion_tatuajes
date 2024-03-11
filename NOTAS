@@ -6,15 +6,15 @@
 
 
 
--appointmentController estructura básica DONE.
--serviceController funciona OK
--authController este lo hicimos.
+-appointmentController estructura básica DONE. OK
+-serviceController funciona OK    OK
+-authController este lo hicimos.    OK
 
--login/register este lo hicimos.
--token este lo hicimos
--comprobaciones
--middlewares este lo hicimos.
--seeders
+-login/register este lo hicimos.    OK
+-token este lo hicimos              OK
+-comprobaciones                     OK
+-middlewares este lo hicimos.       OK
+-seeders FALTA
 
 
 
@@ -24,5 +24,7 @@
 
 README añadir los enpoints (obligatorio) (endpoints) ruta register x ejemplo pasar body del thunderclient para mas rapidez. añadir si es para admin o superadmin.
 
-ERROR HTPP 500 SIN SOLUCIONAR.
-NO VOY A MERGEAR MASTER CON TESTING PORQUE MUCHOS ENDPOINTS NO RULAN.
+ERROR HTPP 500 SIN SOLUCIONAR.  OK
+MERGE. 
+
+LAS MIGRACIONES!!!!!
