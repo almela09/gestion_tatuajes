@@ -98,9 +98,12 @@ El usuario podrá ver su propio perfil
 
 `` npm install --save-dev nodemon``
 
-#Script Compilacion
+# Script Compilacion
 
 ``  "dev": "nodemon ./src/server.ts"  ``
+``  "run-migrations": "typeorm-ts-node-commonjs migration:run -d ./src/database/db.ts" ``
+``  "seed": "ts-node ./src/database/seeders/seeders.ts" ``
+
 
 
 ## Autor 🤓
